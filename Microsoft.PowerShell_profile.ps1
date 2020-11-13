@@ -39,6 +39,61 @@ Set-Alias -name gpull -Value gitPull
 function gitFetch { git fetch}
 Set-Alias -name gfetch -Value gitFetch
 
+function gitFetch { git status}
+Set-Alias -name gstatus -Value gitFetch
+
+
+function dupdateFunction {
+    $MSBuild = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin\MSBuild.exe"
+	$GitRepo = "C:\Users\CKoch\Documents\Source\arcos_rosterapps_database"
+	$LocalDeploysDir = "C:\Users\CKoch\Documents\Source\LocalDeploys"
+	$BuildDebugDirectory="$LocalDeploysDir\AutoBuilds\RosterAppsDatabase\Debug"
+	$DatabasePublishProfile = "$LocalDeploysDir\RosterApps.Database.publish.local.xml"
+	
+	# Get latest ------------------------------------------------------------------------------
+
+	git --git-dir=$GitRepo\.git --work-tree=$GitRepo fetch
+	git --git-dir=$GitRepo\.git --work-tree=$GitRepo pull
+
+	# Build dacpac ------------------------------------------------------------------------------
+
+	$parameters = @(
+        "$GitRepo\RosterApps.Database\RosterApps.Database.sqlproj",
+        '/p:Configuration=Debug',
+        "/p:PublishProfile=`"$DatabasePublishProfile`"",
+        "/p:CurrentDirectory=`"$BuildDebugDirectory`"",
+        "/p:OutDir=`"$BuildDebugDirectory`"" 
+	)
+	
+	& $MSBuild @parameters
+	if(!($LASTEXITCODE -eq 0)) {
+		throw "Fatal: MSBuild failed"
+	}
+
+	# Deploy dacpac ------------------------------------------------------------------------------
+
+	$SqlPackage = "C:\Program Files\Microsoft SQL Server\150\DAC\bin\SqlPackage.exe"
+
+	$parameters = @(
+			'/Action:Publish',
+			"/SourceFile:`"$BuildDebugDirectory\RosterApps.Database.dacpac`""
+			"/Profile:`"$DatabasePublishProfile`"" 
+	)
+
+	Write-Host "Info: Deploying RosterApps.Database"
+	& $SqlPackage @parameters
+	if(!($LASTEXITCODE -eq 0)) {
+		throw "Fatal: SqlPackage failed"
+	}
+
+}
+Set-Alias -name dupdate -Value dupdateFunction 
+
+
+function ngBuildWatch { ngReal build --watch }
+Set-Alias -name bwatch -Value ngBuildWatch
+
+
 function functions {
-	Write-Host "source, eprofile, profilehome, ra, ram, server, rapi, rad, rauth, gp, gf"
+	Write-Host "source, eprofile, profilehome, ra, ram, server, rapi, rad, rauth, gpull, gfetch, pstatus, dupdate, bwatch"
 }
