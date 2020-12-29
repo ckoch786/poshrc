@@ -93,7 +93,12 @@ Set-Alias -name dupdate -Value dupdateFunction
 function ngBuildWatch { ngReal build --watch }
 Set-Alias -name bwatch -Value ngBuildWatch
 
+function runRstrap { iisexpress /path:C:\Users\CKoch\Documents\Source\arcos_rosterapps_new\RosterApps.Web }
+Set-Alias -name rrun -Value runRstrap
+
+function merge { pushd C:\Users\CKoch\Documents\Source\Merge\ }
+Set-Alias -name merge -Value merge
 
 function functions {
-	Write-Host "source, eprofile, profilehome, ra, ram, server, rapi, rad, rauth, gpull, gfetch, pstatus, dupdate, bwatch"
+	Write-Host "source, eprofile, profilehome, ra, ram, server, rapi, rad, rauth, gpull, gfetch, pstatus, dupdate, bwatch, merge, rrun"
 }

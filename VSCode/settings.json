@@ -1,0 +1,45 @@
+{
+    "keyboard.dispatch": "keyCode",
+    
+    "terminal.integrated.rendererType": "dom",
+    "editor.minimap.enabled": false,
+    "breadcrumbs.enabled": true,
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "markdownlint.customRules": [
+        "{docsmsft.docs-linting}/markdownlint-custom-rules/rules.js"
+    ],
+    "markdownlint.config": {
+        "MD025": {
+            "front_matter_title": ""
+        },
+        "MD028": false
+    },
+    "git.confirmSync": false,
+    "git.enableSmartCommit": true,
+    "window.zoomLevel": 0,
+     // ViM settings
+     "vim.normalModeKeyBindingsNonRecursive": [{
+        "before": ["u"],
+        "after": [],
+        "commands": [{
+            "command": "undo",
+            "args": []
+        }]
+    },
+    {
+        "before": ["<C-r>"],
+        "after": [],
+        "commands": [{
+            "command": "redo",
+            "args": []
+        }]
+    }
+    ],
+    "vim.useSystemClipboard": true,
+    "vim.easymotion": true,
+    "vim.easymotionMarkerFontWeight": "normal",
+    "vim.foldfix": true,
+    "vim.leader": ",",
+    "vim.sneak": true,
+}
