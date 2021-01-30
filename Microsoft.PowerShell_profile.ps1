@@ -43,22 +43,23 @@ function gitFetch { git status}
 Set-Alias -name gstatus -Value gitFetch
 
 
+$GitRepoDatabase = "C:\Users\CKoch\Documents\Source\arcos_rosterapps_database"
+
 function dupdateFunction {
     $MSBuild = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin\MSBuild.exe"
-	$GitRepo = "C:\Users\CKoch\Documents\Source\arcos_rosterapps_database"
 	$LocalDeploysDir = "C:\Users\CKoch\Documents\Source\LocalDeploys"
 	$BuildDebugDirectory="$LocalDeploysDir\AutoBuilds\RosterAppsDatabase\Debug"
 	$DatabasePublishProfile = "$LocalDeploysDir\RosterApps.Database.publish.local.xml"
 	
 	# Get latest ------------------------------------------------------------------------------
 
-	git --git-dir=$GitRepo\.git --work-tree=$GitRepo fetch
-	git --git-dir=$GitRepo\.git --work-tree=$GitRepo pull
+	git --git-dir=$GitRepoDatabase\.git --work-tree=$GitRepoDatabase  fetch
+	git --git-dir=$GitRepoDatabase\.git --work-tree=$GitRepoDatabase  pull
 
 	# Build dacpac ------------------------------------------------------------------------------
 
 	$parameters = @(
-        "$GitRepo\RosterApps.Database\RosterApps.Database.sqlproj",
+        "$GitRepoDatabase\RosterApps.Database\RosterApps.Database.sqlproj",
         '/p:Configuration=Debug',
         "/p:PublishProfile=`"$DatabasePublishProfile`"",
         "/p:CurrentDirectory=`"$BuildDebugDirectory`"",
@@ -99,6 +100,42 @@ Set-Alias -name rrun -Value runRstrap
 function merge { pushd C:\Users\CKoch\Documents\Source\Merge\ }
 Set-Alias -name merge -Value merge
 
+$GitRepoMain = "C:\Users\CKoch\Documents\Source\arcos_rosterapps_new"
+function getRelease { 
+
+	param (
+		$branch
+	)
+
+	git --git-dir=$GitRepoDatabase\.git --work-tree=$GitRepoDatabase  checkout $branch
+	git --git-dir=$GitRepoDatabase\.git --work-tree=$GitRepoDatabase  fetch
+	git --git-dir=$GitRepoDatabase\.git --work-tree=$GitRepoDatabase  pull
+
+	git --git-dir=$GitRepoMain\.git --work-tree=$GitRepoMain  checkout $branch 
+	git --git-dir=$GitRepoMain\.git --work-tree=$GitRepoMain  fetch
+	git --git-dir=$GitRepoMain\.git --work-tree=$GitRepoMain  pull
+}
+
+function g2104 {
+	getRelease 21.04
+}
+
+function g2106 {
+	getRelease 21.06
+}
+
+function g2108 {
+	getRelease 21.08
+}
+
+function g2110 {
+	getRelease 21.10
+}
+
+function g2112 {
+	getRelease 21.12
+}
+
 function functions {
-	Write-Host "source, eprofile, profilehome, ra, ram, server, rapi, rad, rauth, gpull, gfetch, pstatus, dupdate, bwatch, merge, rrun"
+	Write-Host "source, eprofile, profilehome, ra, ram, server, rapi, rad, rauth, gpull, gfetch, pstatus, dupdate, bwatch, merge, rrun, g2104"
 }
