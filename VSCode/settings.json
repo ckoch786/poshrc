@@ -1,6 +1,6 @@
 {
     "keyboard.dispatch": "keyCode",
-    
+    "terminal.integrated.fontFamily": "monospace",
     "terminal.integrated.rendererType": "dom",
     "editor.minimap.enabled": false,
     "breadcrumbs.enabled": true,
@@ -17,7 +17,7 @@
     },
     "git.confirmSync": false,
     "git.enableSmartCommit": true,
-    "window.zoomLevel": 0,
+    "window.zoomLevel": -1,
      // ViM settings
      "vim.normalModeKeyBindingsNonRecursive": [{
         "before": ["u"],
@@ -42,4 +42,6 @@
     "vim.foldfix": true,
     "vim.leader": ",",
     "vim.sneak": true,
+    "diffEditor.renderSideBySide": false,
+    "terminal.integrated.shell.windows": "C:\\Program Files\\PowerShell\\7\\pwsh.exe"
 }
