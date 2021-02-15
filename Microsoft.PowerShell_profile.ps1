@@ -2,6 +2,17 @@ Push-Location -Path $HOME\Documents\Source
 Import-Module C:\Users\Ckoch\Documents\PowerShell\Modules\posh-git\1.0.0\posh-git.psd1
 . (Join-Path $((Get-Module psreadline).ModuleBase) "SamplePSReadLineProfile.ps1")
 
+Import-Module oh-my-posh
+Set-Theme Star
+
+# Windows Terminal settings.json 
+function eTerminalSettings {
+	 code $Env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
+}
+
+function eVSCodeSettings {
+	code $Env:APPDATA\Code\User\settings.json
+}
 
 # Aliases
 
@@ -57,11 +68,15 @@ function dupdateFunction {
 	git --git-dir=$GitRepoDatabase\.git --work-tree=$GitRepoDatabase  pull
 
 	# Build dacpac ------------------------------------------------------------------------------
+	# Build warning SQL70588: WITH CHECK | NOCHECK option for existing data check enforcement is ignored.
+	# Build warning SQL71502: Procedure: [dbo].[EnhancedBidRound_AvailableOpening_Get] has an unresolved reference to object --- EVB Only? No
+	# Build warning SQL71558: The object reference [dbo].[EnhancedBidPackage_NotificationSettings].[NotificationTimeFrameAmount] differs only by case from the object definition
 
 	$parameters = @(
         "$GitRepoDatabase\RosterApps.Database\RosterApps.Database.sqlproj",
         '/p:Configuration=Debug',
         "/p:PublishProfile=`"$DatabasePublishProfile`"",
+        '/p:NoWarn=SQL70588, SQL71502, SQL71588',
         "/p:CurrentDirectory=`"$BuildDebugDirectory`"",
         "/p:OutDir=`"$BuildDebugDirectory`"" 
 	)
@@ -109,7 +124,7 @@ function getRelease {
 
 	git --git-dir=$GitRepoDatabase\.git --work-tree=$GitRepoDatabase  checkout $branch
 	git --git-dir=$GitRepoDatabase\.git --work-tree=$GitRepoDatabase  fetch
-	git --git-dir=$GitRepoDatabase\.git --work-tree=$GitRepoDatabase  pull
+	git --git-dir=$GitRepoDatabase\.git --work-tree=$GitRepoDatabase  pull 
 
 	git --git-dir=$GitRepoMain\.git --work-tree=$GitRepoMain  checkout $branch 
 	git --git-dir=$GitRepoMain\.git --work-tree=$GitRepoMain  fetch
@@ -139,3 +154,57 @@ function g2112 {
 function functions {
 	Write-Host "source, eprofile, profilehome, ra, ram, server, rapi, rad, rauth, gpull, gfetch, pstatus, dupdate, bwatch, merge, rrun, g2104"
 }
+
+$SqlServerInstance = "CKOCH"
+$Database = "RosterApps_Alpha"
+
+function sql {
+	param (
+		$query
+	)
+	Invoke-Sqlcmd -ServerInstance $SqlServerInstance -Database $Database -Query $query
+}
+
+function deleteAllEVB {
+	$query = @'
+delete from PackageWorkGroup_SeniorityRankRule
+GO
+delete from PackageWorkGroup_ParentChildMapping
+GO
+delete from PackageWorkgroup
+GO
+delete from EnhancedBidRoundOption
+GO
+delete from EnhancedBidRoundOptionHistory
+GO
+delete from EnhancedEmployeeStatusCharge
+GO
+delete from EnhancedLeftOverAccrualHoursOptions
+GO
+delete from EnhancedTimeChargedPerBidPreferenceOptions
+GO
+delete from EnhancedBidRoundAcknowledgment
+GO
+delete from EnhancedBidPreference
+GO
+delete from EnhancedBidRound_AvailableOpening
+GO
+delete from EnhancedBidRound_LiabilityLevelOption
+GO
+delete from EnhancedBidPreferenceCart
+GO
+delete from EmployeeParticipation
+GO
+delete from EnhancedBidRoundParticipationOverride
+GO
+delete from EnhancedBidRound
+GO
+delete from EnhancedBidPackageOption
+GO
+delete from EnhancedBidPackage_NotificationSettings
+GO
+delete from EnhancedBidPackage
+'@
+	sql $query
+}
+
