@@ -48,4 +48,5 @@ Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
 
 # Shows navigable menu of all options when hitting Tab
  Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+ Set-PSReadlineOption -EditMode vi
 
