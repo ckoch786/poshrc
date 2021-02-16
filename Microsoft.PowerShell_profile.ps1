@@ -45,3 +45,7 @@ Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
             [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
          }
  }
+
+# Shows navigable menu of all options when hitting Tab
+ Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+
