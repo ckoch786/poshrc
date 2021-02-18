@@ -38,6 +38,15 @@ Set-Alias -name gfetch -Value gitFetch
 function gitFetch { git status}
 Set-Alias -name gstatus -Value gitFetch
 
+function gitCOFile {
+   param(
+      $file
+   )
+   $filePathWithBackslashes = $file.Replace("/", "\")
+
+   git checkout $filePathWithBackslashes
+}
+
 # PowerShell parameter completion shim for the dotnet CLI
 Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
      param($commandName, $wordToComplete, $cursorPosition)
