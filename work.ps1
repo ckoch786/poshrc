@@ -38,7 +38,7 @@ function dupdateFunction {
         "$GitRepoDatabase\RosterApps.Database\RosterApps.Database.sqlproj",
         '/p:Configuration=Debug',
         "/p:PublishProfile=`"$DatabasePublishProfile`"",
-        #'/p:NoWarn=SQL70588, SQL71502, SQL71588',
+        '/p:NoWarn=SQL70588, SQL71502, SQL71588',
         "/p:CurrentDirectory=`"$BuildDebugDirectory`"",
         "/p:OutDir=`"$BuildDebugDirectory`"" 
 	)
@@ -111,10 +111,6 @@ function g2110 {
 
 function g2112 {
 	getRelease 21.12
-}
-
-function functions {
-	Write-Host "source, eprofile, profilehome, ra, ram, server, rapi, rad, rauth, gpull, gfetch, pstatus, dupdate, bwatch, merge, rrun, g2104"
 }
 
 $SqlServerInstance = "CKOCH"
