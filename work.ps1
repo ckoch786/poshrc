@@ -16,6 +16,9 @@ Set-Alias -Name rauth -Value cdrauth
 function cdrad {Push-Location -Path C:\Users\CKoch\Documents\Source\arcos_rosterapps_database\}
 Set-Alias -Name rad -Value cdrad
 
+function cdprojects {Push-Location -Path C:\Users\CKoch\Documents\Personal\Projects}
+Set-Alias -Name projects -Value cdprojects
+
 $GitRepoDatabase = "C:\Users\CKoch\Documents\Source\arcos_rosterapps_database"
 
 function dupdateFunction {
@@ -38,7 +41,7 @@ function dupdateFunction {
         "$GitRepoDatabase\RosterApps.Database\RosterApps.Database.sqlproj",
         '/p:Configuration=Debug',
         "/p:PublishProfile=`"$DatabasePublishProfile`"",
-        '/p:NoWarn=SQL70588, SQL71502, SQL71588',
+        #'/p:NoWarn=SQL70588, SQL71502, SQL71588',
         "/p:CurrentDirectory=`"$BuildDebugDirectory`"",
         "/p:OutDir=`"$BuildDebugDirectory`"" 
 	)
@@ -113,6 +116,50 @@ function g2112 {
 	getRelease 21.12
 }
 
+function g2114 {
+	getRelease 21.14
+}
+
+function g2116 {
+	getRelease 21.16
+}
+
+function g2118 {
+	getRelease 21.18
+}
+
+function g2122 {
+	getRelease 21.22
+}
+
+function g2124 {
+	getRelease 21.24
+}
+function g2126 {
+	getRelease 21.26
+}
+function g2128 {
+	getRelease 21.28
+}
+function g2130 {
+	getRelease 21.30
+}
+
+function g2132 {
+	getRelease 21.32
+}
+
+function g2134 {
+	getRelease 21.34
+}
+
+function g2136 {
+	getRelease 21.36
+}
+function g2137 {
+	getRelease 21.37
+}
+
 $SqlServerInstance = "CKOCH"
 $Database = "RosterApps_Alpha"
 
@@ -125,11 +172,17 @@ function sql {
 
 function deleteAllEVB {
 	$query = @'
-delete from PackageWorkGroup_SeniorityRankRule
+delete  from EnhancedBidPackageOption
 GO
-delete from PackageWorkGroup_ParentChildMapping
+delete from EnhancedBidPackage_LiabilityDays
 GO
-delete from PackageWorkgroup
+delete from PackageBidGroup_WorkGroups
+GO
+delete from PackageBidGroup_LiabilityGroups
+GO
+delete from PackageBidgroup
+GO
+delete from EnhancedBidPackage
 GO
 delete from EnhancedBidRoundOption
 GO
@@ -141,7 +194,7 @@ delete from EnhancedLeftOverAccrualHoursOptions
 GO
 delete from EnhancedTimeChargedPerBidPreferenceOptions
 GO
-delete from EnhancedBidRoundAcknowledgment
+delete from EnhancedBidPackageAcknowledgment
 GO
 delete from EnhancedBidPreference
 GO

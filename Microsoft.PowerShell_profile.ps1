@@ -3,7 +3,8 @@ Import-Module C:\Users\Ckoch\Documents\PowerShell\Modules\posh-git\1.0.0\posh-gi
 . (Join-Path $((Get-Module psreadline).ModuleBase) "SamplePSReadLineProfile.ps1")
 
 Import-Module oh-my-posh
-Set-Theme Star
+#Set-Theme Star - TODO get this to have git info
+Set-Theme Paradox
 
 Import-Module InvokeBuild
 set-alias ib invoke-build
@@ -145,3 +146,65 @@ Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
    Write-Host '-----------------------[Work Settings]------------------------------'
    Get-Content $Env:HOME\PowerShell\work.ps1 | Select-String function | Sort-Object | Write-Host
  }
+
+ function projectsPrint {
+   Write-Host "Main work repos Documents\Source for more use workProjects command"
+   Write-Host "Educational repos: Documents\Personal\Projects"
+ }
+
+ function workProjects {
+   Write-Host "TODO"
+ }
+
+ function educationalProjects {
+  Get-ChildItem $Env:HOME\Personal\Projects
+ }
+
+function cdeducational {Push-Location -Path C:\Users\CKoch\Documents\Personal\Projects}
+
+function coolCommands {
+  write-host "Get-PSReadLineKeyHandler - show all key mappings"
+}
+
+#Set-PSDebug -Trace 0
+
+function AddLine {
+    param(
+        $rootPath,
+        $fileExtension,
+        $lineToAdd
+    )
+
+    get-childitem $rootPath\*$fileExtension -recurse | ` 
+        foreach-object { 
+                write-host $_ && "$lineToAdd`r`n" + (get-content  $_.FullName | out-string) | ` 
+                set-content $_.FullName 
+            }
+}
+
+function RunAddLine {
+     AddLine -rootPath "C:\Users\CKoch\Documents\Source\arcos_rosterapps_new\RosterApps.Web\" -fileExtension ".aspx.cs" -lineToAdd "using RosterApps.Web.WebSecurity;"
+}
+
+function RemoveLine {
+    param(
+        $rootPath,
+        $fileExtension,
+        $lineToRemove
+    )
+
+    get-childitem $rootPath\*$fileExtension -recurse | ` 
+        foreach-object { 
+                write-host $_ && (get-content  $_.FullName) | ` 
+                where-object { 
+                    $_ -notmatch "$lineToRemove"
+                } | `
+
+                set-content $_.FullName 
+            }
+}
+
+
+function runRemoveLine {
+    RemoveLine -rootPath "C:\Users\CKoch\Documents\Source\arcos_rosterapps_new\RosterApps.Web\" -fileExtension ".aspx.cs" -lineToRemove "private UserIdentity _user = "
+}
