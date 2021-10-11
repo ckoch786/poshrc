@@ -68,14 +68,11 @@ function pushprofilehome { Push-Location -Path $Env:HOME\PowerShell}
 Set-Alias -Name profilehome -Value pushprofilehome
 
 # Git
-function gitPull { git pull}
-Set-Alias -name gpull -Value gitPull
+function gstatus { git status}
 
-function gitFetch { git fetch}
-Set-Alias -name gfetch -Value gitFetch
+function gdiff { git diff }
 
-function gitFetch { git status}
-Set-Alias -name gstatus -Value gitFetch
+function gpush { git push -u origin HEAD }
 
 function gitCOFile {
    param(
@@ -164,6 +161,14 @@ function cdeducational {Push-Location -Path C:\Users\CKoch\Documents\Personal\Pr
 
 function coolCommands {
   write-host "Get-PSReadLineKeyHandler - show all key mappings"
+}
+
+function WhereIs {
+  param (
+    $commandName
+  )
+  
+  where.exe $commandName
 }
 
 #Set-PSDebug -Trace 0

@@ -218,3 +218,22 @@ delete from EnhancedBidPackage
 '@
 	sql $query
 }
+
+
+# URL example to create a PR on a specific release branch
+#https://git.rostermonster.com/projects/ARA/repos/arcos_rosterapps_new/pull-requests?create&sourceBranch=refs/heads/bugfix/RAPD-8383&targetBranch=refs/heads/21.42
+
+<#
+	Need a new object type that includes feature/bug branch name, and release branch name, and link to JIRA?
+
+	Example of bitbucket JIRA url https://git.rostermonster.com/plugins/servlet/jira-integration/issues/RAPD-8169
+
+	object will have push and merge methods
+
+	base object will have branch form latest and take a release branch
+
+https://docs.microsoft.com/en-us/powershell/scripting/learn/deep-dives/everything-about-arrays?view=powershell-7.1
+https://gist.github.com/kevinblumenfeld/4a698dbc90272a336ed9367b11d91f1c
+#>
+
+
