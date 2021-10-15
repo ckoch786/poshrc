@@ -1,4 +1,7 @@
-Push-Location -Path $HOME\Documents\Source
+$my_home = "$HOME\Documents\Source\scratch"
+Push-Location -Path $my_home
+nvim-qt.exe $my_home
+
 Import-Module C:\Users\Ckoch\Documents\PowerShell\Modules\posh-git\1.0.0\posh-git.psd1
 . (Join-Path $((Get-Module psreadline).ModuleBase) "SamplePSReadLineProfile.ps1")
 
@@ -74,6 +77,8 @@ function touch {
   
   New-Item $filename
 }
+
+function l { Get-ChildItem }
 
 # Git
 function gstatus { git status}
