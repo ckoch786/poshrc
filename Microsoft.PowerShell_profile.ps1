@@ -67,10 +67,22 @@ Set-Alias -Name eprofile -Value editProfile
 function pushprofilehome { Push-Location -Path $Env:HOME\PowerShell}
 Set-Alias -Name profilehome -Value pushprofilehome
 
+function touch {
+   param (
+    $filename
+  )
+  
+  New-Item $filename
+}
+
 # Git
 function gstatus { git status}
 
+function glog { git log }
+
 function gdiff { git diff }
+
+function gpull { git pull }
 
 function gpush { git push -u origin HEAD }
 
