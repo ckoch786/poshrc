@@ -91,7 +91,7 @@ function getRelease {
 	getReleaseWeb $branch
 }
 
-function getRelaeseDatabase {
+function getReleaseDatabase {
 	param (
 		$branch
 	)

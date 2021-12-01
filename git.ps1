@@ -33,12 +33,9 @@ function g2AddFiles {
 # TODO prompt for list and auto prefix the *
 # Auto add the RAPD- prefix to commit message
 # Add separate call or flag for default merge commit message
-function g1CommitM {
-  param (
-    $message
-  )
-  
-  git commit -m $message
+function g1Commit {
+    Write-Host "# TODO Use plugin for nvim for git instead of vanilla git commit!"
+    git commit 
 }
 
 function g2COFile {
