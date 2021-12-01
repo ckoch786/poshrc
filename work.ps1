@@ -86,11 +86,27 @@ function getRelease {
 	param (
 		$branch
 	)
+	
+	getRelaeseDatabase $branch
+	getReleaseWeb $branch
+}
+
+function getRelaeseDatabase {
+	param (
+		$branch
+	)
 
 	git --git-dir=$GitRepoDatabase\.git --work-tree=$GitRepoDatabase  checkout $branch
 	git --git-dir=$GitRepoDatabase\.git --work-tree=$GitRepoDatabase  fetch
 	git --git-dir=$GitRepoDatabase\.git --work-tree=$GitRepoDatabase  pull 
+	
+}
 
+function getReleaseWeb {
+	param (
+		$branch
+	)
+	
 	git --git-dir=$GitRepoMain\.git --work-tree=$GitRepoMain  checkout $branch 
 	git --git-dir=$GitRepoMain\.git --work-tree=$GitRepoMain  fetch
 	git --git-dir=$GitRepoMain\.git --work-tree=$GitRepoMain  pull

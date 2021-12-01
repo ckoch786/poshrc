@@ -1,6 +1,9 @@
 $my_home = "$HOME\Documents\Source\scratch"
 Push-Location -Path $my_home
-nvim-qt.exe $my_home
+
+if(-not (Get-Process "nvim-qt")) {
+  nvim-qt.exe $my_home
+}
 
 Import-Module C:\Users\Ckoch\Documents\PowerShell\Modules\posh-git\1.0.0\posh-git.psd1
 . (Join-Path $((Get-Module psreadline).ModuleBase) "SamplePSReadLineProfile.ps1")
@@ -18,6 +21,10 @@ Import-Module cd-extras
 if ($env:UserDomain -eq "ARCOSHQ") {
 	. $Env:HOME\PowerShell\work.ps1
 }
+
+. $Env:HOME\PowerShell\git.ps1
+
+<# ---------------------------------------------------------------------------------------------------- #>
 function cl($path) { cd $path; ls; }
 function dw { get-childitem $args | format-wide }
 
@@ -80,67 +87,6 @@ function touch {
 
 function l { Get-ChildItem }
 
-# Git
-function gstatus { git status}
-
-function glog { git log }
-
-function gdiff { git diff }
-
-function gpull { git pull }
-
-function gpush { git push -u origin HEAD }
-
-function gitCOFile {
-   param(
-      $file
-   )
-   $filePathWithBackslashes = $file.Replace("/", "\")
-
-   git checkout $filePathWithBackslashes
-}
-
-function gitBranchFromLatest{
-   param(
-      $release_branch,
-      $feature_branch_RAPD,
-      $bugfix_branch_RAPD
-   )
-  
-   git checkout $release_branch
-   git fetch
-   git pull
-
-   if($feature_branch_RAPD) {
-    git checkout -b feature/RAPD-$feature_branch_RAPD
-   }
-
-   if($bugfix_branch_RAPD) {
-    git checkout -b bugfix/RAPD-$bugfix_branch_RAPD
-   }
-}
-
-function gitMergeLatest {
-   param(
-      $release_branch,
-      $feature_branch_RAPD,
-      $bugfix_branch_RAPD
-   )
-  
-   git checkout $release_branch
-   git fetch
-   git pull
-
-   if($feature_branch_RAPD) {
-    git checkout feature/RAPD-$feature_branch_RAPD
-   }
-
-   if($bugfix_branch_RAPD) {
-    git checkout bugfix/RAPD-$bugfix_branch_RAPD
-   }
-   
-  git merge $release_branch
-}
 
 # PowerShell parameter completion shim for the dotnet CLI
 Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
@@ -156,9 +102,25 @@ Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
 
 
  function functions{
+   Write-Host '-----------------------[Main Settings]------------------------------'
    Get-Content $PSCommandPath | Select-String function | Sort-Object | Write-Host
+   gitFunctions
    Write-Host '-----------------------[Work Settings]------------------------------'
    Get-Content $Env:HOME\PowerShell\work.ps1 | Select-String function | Sort-Object | Write-Host
+ }
+
+ function gitFunctions {
+   Write-Host '-----------------------[Git Settings]------------------------------'
+   Get-Content $Env:HOME\PowerShell\git.ps1 | Select-String function | Sort-Object | Write-Host
+ }
+
+ function functionTodos {
+   Write-Host '-----------------------[Main Settings]------------------------------'
+   Get-Content $PSCommandPath | Select-String "# TODO *" | Write-Host
+   Write-Host '-----------------------[Git Settings]------------------------------'
+   Get-Content $Env:HOME\PowerShell\git.ps1 | Select-String "# TODO*" | Write-Host
+   Write-Host '-----------------------[Work Settings]------------------------------'
+   Get-Content $Env:HOME\PowerShell\work.ps1 | Select-String "# TODO*" | Write-Host
  }
 
  function projectsPrint {
