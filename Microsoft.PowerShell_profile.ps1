@@ -85,6 +85,22 @@ function touch {
   New-Item $filename
 }
 
+function tail {
+  param(
+    $file
+  )
+  
+  Get-Content $file -Tail 10
+}
+
+function tailWatch {
+  param(
+    $file
+  )
+
+  Get-Content $file -Tail 10 -Wait
+}
+
 function l { Get-ChildItem }
 
 

@@ -1,0 +1,64 @@
+;;; from https://www.emacswiki.org/emacs/LoadingLispFiles
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
+(defun load-directory (dir)
+      (let ((load-it (lambda (f)
+		       (load-file (concat (file-name-as-directory dir) f)))
+		     ))
+	(mapc load-it (directory-files dir nil "\\.el$"))))
+(load-directory "~/.emacs.d/lisp/")
+
+(require 'powershell)
+
+(autoload 'PowerShell "powershell" "Run powershell as a shell within emacs." t) 
+
+(column-number-mode 1)
+(tool-bar-mode -1)
+
+;;; TODO permission issues with savehist?????
+;;; From http://pages.sachachua.com/.emacs.d/Sacha.html#org0477c97
+;; (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+
+;; (setq savehist-file "~/.emacs.d/savehist")
+;; (savehist-mode 1)
+;; (setq history-length t)
+;; (setq history-delete-duplicates t)
+;; (setq savehist-save-minibuffer-history 1)
+;; (setq savehist-additional-variables
+;;       '(kill-ring
+;;         search-ring
+;;         regexp-search-ring))
+(display-time-mode 1)
+(put 'scroll-left 'disabled nil)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-archives
+   '(("gnu" . "https://elpa.gnu.org/packages/")
+     ("melpa" . "https://stable.melpa.org/packages/")))
+ '(package-selected-packages
+   '(evil-collection typescript-mode angular-mode csharp-mode gruvbox-theme evil magit)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(require 'evil)
+(evil-mode 1)
+(load-theme 'gruvbox-dark-hard t)
+
+
+(setq evil-want-keybinding nil)
+(require 'evil)
+(when (require 'evil-collection nil t)
+  (evil-collection-init))
+
+
