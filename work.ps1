@@ -211,7 +211,7 @@ function getWarningMessages() {
 
 	$warningLines | Sort-Object |
 		ForEach-Object {
-			$warning = $_.Line.Trim().Split(' ')[2] -replace '.$' -replace 'CS'
+			$warning = $_.Line.Trim().Split(' ')[2] -replace '.$'
 			$warnings.Add($warning)
 		}
 
