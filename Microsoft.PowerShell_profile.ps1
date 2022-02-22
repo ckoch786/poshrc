@@ -59,9 +59,8 @@ function eTerminalSettings {
 	 code $Env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
 }
 
-function eProfileWorkSpace {
-  code $Env:HOME\PowerShell
-}
+function editWorkSpaceProfile { code $Env:HOME\PowerShell }
+Set-Alias -Name eProfileWorkSpace -Value editWorkSpaceProfile
 
 function eVSCodeSettings {
 	code $Env:APPDATA\Code\User\settings.json
@@ -99,6 +98,24 @@ function tailWatch {
   )
 
   Get-Content $file -Tail 10 -Wait
+}
+
+function RunReplaceFile {
+    ReplaceLine -rootPath "C:\Development\Source\TestReplace" -fileExtension ".aspx.cs" -lineToReplace "private UserIdentity _user = Security.GetCurrentUser();" -replaceText "private readonly UserIdentity _user = Business.Web.Security.Security.GetCurrentUser();"
+}
+
+function ReplaceLine {
+    param(
+        $rootPath,
+        $fileExtension,
+        $lineToReplace,
+	$replaceText
+    )
+    get-childitem $rootPath\*$fileExtension -recurse | `
+        foreach-object {
+                write-host $_ && (get-content  $_.FullName).replace($lineToReplace, $replaceText) | `
+                set-content $_.FullName
+            }
 }
 
 function l { Get-ChildItem }

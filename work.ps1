@@ -1,3 +1,10 @@
+<# 
+	Work 
+#>
+
+. $Env:HOME\PowerShell\sql.ps1
+
+
 function cdra {Push-Location -Path C:\Users\CKoch\Documents\Source\arcos_rosterapps_new\RosterApps.Web\}
 Set-Alias -Name ra -Value cdra
 
@@ -87,7 +94,7 @@ function getRelease {
 		$branch
 	)
 	
-	getRelaeseDatabase $branch
+	getReleaseDatabase $branch
 	getReleaseWeb $branch
 }
 
@@ -176,65 +183,6 @@ function g2137 {
 	getRelease 21.37
 }
 
-$SqlServerInstance = "CKOCH"
-$Database = "RosterApps_Alpha"
-
-function sql {
-	param (
-		$query
-	)
-	Invoke-Sqlcmd -ServerInstance $SqlServerInstance -Database $Database -Query $query
-}
-
-function deleteAllEVB {
-	$query = @'
-delete  from EnhancedBidPackageOption
-GO
-delete from EnhancedBidPackage_LiabilityDays
-GO
-delete from PackageBidGroup_WorkGroups
-GO
-delete from PackageBidGroup_LiabilityGroups
-GO
-delete from PackageBidgroup
-GO
-delete from EnhancedBidPackage
-GO
-delete from EnhancedBidRoundOption
-GO
-delete from EnhancedBidRoundOptionHistory
-GO
-delete from EnhancedEmployeeStatusCharge
-GO
-delete from EnhancedLeftOverAccrualHoursOptions
-GO
-delete from EnhancedTimeChargedPerBidPreferenceOptions
-GO
-delete from EnhancedBidPackageAcknowledgment
-GO
-delete from EnhancedBidPreference
-GO
-delete from EnhancedBidRound_AvailableOpening
-GO
-delete from EnhancedBidRound_LiabilityLevelOption
-GO
-delete from EnhancedBidPreferenceCart
-GO
-delete from EmployeeParticipation
-GO
-delete from EnhancedBidRoundParticipationOverride
-GO
-delete from EnhancedBidRound
-GO
-delete from EnhancedBidPackageOption
-GO
-delete from EnhancedBidPackage_NotificationSettings
-GO
-delete from EnhancedBidPackage
-'@
-	sql $query
-}
-
 
 # URL example to create a PR on a specific release branch
 #https://git.rostermonster.com/projects/ARA/repos/arcos_rosterapps_new/pull-requests?create&sourceBranch=refs/heads/bugfix/RAPD-8383&targetBranch=refs/heads/21.42
@@ -252,4 +200,20 @@ https://docs.microsoft.com/en-us/powershell/scripting/learn/deep-dives/everythin
 https://gist.github.com/kevinblumenfeld/4a698dbc90272a336ed9367b11d91f1c
 #>
 
+# TODO make a function that pulls out the Error lines
+function getWarningMessages() {
+	param (
+		$msBuildOutput
+	)
 
+	$warningLines = Select-String -Path $msBuildOutput -Pattern 'warning CS'
+	$warnings = New-Object Collections.Generic.List[string]
+
+	$warningLines | Sort-Object |
+		ForEach-Object {
+			$warning = $_.Line.Trim().Split(' ')[2] -replace '.$' -replace 'CS'
+			$warnings.Add($warning)
+		}
+
+		$warnings | Sort-Object | Get-Unique
+}
