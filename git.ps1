@@ -88,3 +88,21 @@ function gitMergeLatest {
    
   git merge $release_branch
 }
+
+function gitMergeReleaseBranchUp {
+   param(
+      $release_branch_lower,
+      $release_branch_upper
+   )
+
+   git checkout $release_branch_lower
+   git fetch
+   git pull
+
+   git checkout $release_branch_upper
+   git fetch
+   git pull
+
+   git merge $release_branch_lower
+}
+
