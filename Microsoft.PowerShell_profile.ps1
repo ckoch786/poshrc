@@ -1,16 +1,20 @@
-$my_home = "$HOME\Documents\Source\scratch"
+$my_home = "$Env:HOME\scratch"
 Push-Location -Path $my_home
 
 if(-not (Get-Process "nvim-qt")) {
   nvim-qt.exe $my_home
 }
 
-Import-Module C:\Users\Ckoch\Documents\PowerShell\Modules\posh-git\1.0.0\posh-git.psd1
-. (Join-Path $((Get-Module psreadline).ModuleBase) "SamplePSReadLineProfile.ps1")
+#Import-Module C:\Users\Ckoch\Documents\PowerShell\Modules\posh-git\1.0.0\posh-git.psd1
+#. (Join-Path $((Get-Module psreadline).ModuleBase) "SamplePSReadLineProfile.ps1")
 
+
+# TODO auto install missing packages
 Import-Module oh-my-posh
+oh-my-posh init pwsh | Invoke-Expression
 #Set-Theme Star - TODO get this to have git info
-Set-Theme Paradox
+# Latest version of oh-my-posh renamed Set-Theme!
+Set-PoshPrompt Paradox
 
 Import-Module InvokeBuild
 set-alias ib invoke-build

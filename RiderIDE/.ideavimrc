@@ -1,0 +1,19 @@
+" TODO add source ~/.vimrc to this file and add Rider specific settings in here
+" :so ~/.ideavimrc
+set surround " Use vim-surround
+set clipboard+=unnamed " Yank to system clipboard
+set scrolloff=8 " Keep 8 minimum lines of code above and below cursor when scrolling
+set ch=2                " Make command line two lines high
+set mousehide           " Hide the mouse when typing text
+" ---- Line number settings ----
+set relativenumber
+set number " Show line numbers on left
+" ----- Search settings ------
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+Plug 'easymotion/vim-easymotion'
+set easymotion
+set acejump
+let mapleader=" "
