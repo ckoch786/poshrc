@@ -8,6 +8,23 @@ if(-not (Get-Process "nvim-qt")) {
 #Import-Module C:\Users\Ckoch\Documents\PowerShell\Modules\posh-git\1.0.0\posh-git.psd1
 #. (Join-Path $((Get-Module psreadline).ModuleBase) "SamplePSReadLineProfile.ps1")
 
+# Fzf setup
+# https://github.com/kelleyma49/PSFzf/blob/master/docs/Set-PsFzfOption.md
+Set-PsFzfOption -EnableAliasFuzzyZLocation
+Set-PsFzfOption -EnableAliasFuzzyGitStatus
+Set-PsFzfOption -EnableFuzzyHistory
+Set-PsFzfOption -EnableFuzzyEdit
+Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
+Set-Alias fe Invoke-FuzzyEdit
+Set-Alias fh Invoke-FuzzyHistory
+Set-Alias fz Invoke-FuzzyZLocation 
+Set-Alias fgs Invoke-FuzzyGitStatus
+# Override PSReadLine's history search
+Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' `
+                -PSReadlineChordReverseHistory 'Ctrl+r'
+
+Import-Module ZLocation
+
 
 # TODO auto install missing packages
 Import-Module oh-my-posh
@@ -141,9 +158,11 @@ Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
  function functions{
    Write-Host '-----------------------[Main Settings]------------------------------'
    Get-Content $PSCommandPath | Select-String function | Sort-Object | Write-Host
+   Get-Content $PSCommandPath | Select-String Set-Alias | Sort-Object | Write-Host
    gitFunctions
    Write-Host '-----------------------[Work Settings]------------------------------'
    Get-Content $Env:HOME\PowerShell\work.ps1 | Select-String function | Sort-Object | Write-Host
+   Get-Content $Env:HOME\PowerShell\work.ps1 | Select-String Set-Alias | Sort-Object | Write-Host
  }
 
  function gitFunctions {

@@ -7,6 +7,7 @@ function g1diffTODO {
     git diff | select-string "\/\/ TODO*" | Write-Host
 }
 
+function g1resetlast { git reset HEAD~ }
 
 # TODO create auto fill handler for g functions
 # Using 1 and 2 to help with filtering g commands for now
@@ -106,3 +107,17 @@ function gitMergeReleaseBranchUp {
    git merge $release_branch_lower
 }
 
+function gitMergeLatestNamed {
+   param(
+      $release_branch,
+      $named_branch
+   )
+  
+   git checkout $release_branch
+   git fetch
+   git pull
+
+   git checkout $named_branch
+
+   git merge $release_branch
+}
