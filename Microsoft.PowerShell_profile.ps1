@@ -1,9 +1,12 @@
 $my_home = "$Env:HOME\scratch"
 Push-Location -Path $my_home
 
-if(-not (Get-Process "nvim-qt")) {
-  nvim-qt.exe $my_home
-}
+$x = [xml]"<doc><intro>Once upon a time...</intro></doc>"
+$x["doc"]
+
+# if(-not (Get-Process "nvim-qt")) {
+#   nvim-qt.exe $my_home
+# }
 
 #Import-Module C:\Users\Ckoch\Documents\PowerShell\Modules\posh-git\1.0.0\posh-git.psd1
 #. (Join-Path $((Get-Module psreadline).ModuleBase) "SamplePSReadLineProfile.ps1")
@@ -44,8 +47,18 @@ if ($env:UserDomain -eq "ARCOSHQ") {
 }
 
 . $Env:HOME\PowerShell\git.ps1
+. $Env:HOME\PowerShell\ShowCalendar\showcalendar.ps1
+
 
 <# ---------------------------------------------------------------------------------------------------- #>
+function cal {
+  param(
+    [String[]]$options
+  )
+
+  Show-Calendar $options
+}
+
 function cl($path) { cd $path; ls; }
 function dw { get-childitem $args | format-wide }
 
