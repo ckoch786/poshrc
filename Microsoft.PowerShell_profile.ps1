@@ -3,6 +3,10 @@ Push-Location -Path $my_home
 
 $x = [xml]"<doc><intro>Once upon a time...</intro></doc>"
 $x["doc"]
+# https://adamtheautomator.com/powershell-parse-xml/
+# TODO make use of Show-Markdown https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/show-markdown?view=powershell-7.3
+# TODO use symlinks to install other init files
+# https://www.manning.com/books/learn-powershell-toolmaking-in-a-month-of-lunches
 
 # if(-not (Get-Process "nvim-qt")) {
 #   nvim-qt.exe $my_home
@@ -50,13 +54,20 @@ if ($env:UserDomain -eq "ARCOSHQ") {
 . $Env:HOME\PowerShell\ShowCalendar\showcalendar.ps1
 
 
+
 <# ---------------------------------------------------------------------------------------------------- #>
+function time { [DateTime]::now | Write-Host }
+
 function cal {
   param(
     [String[]]$options
   )
 
-  Show-Calendar $options
+  if($options) {
+    Show-Calendar $options
+  } else {
+    Show-Calendar
+  }
 }
 
 function cl($path) { cd $path; ls; }
@@ -90,21 +101,21 @@ function su {
 
 # Windows Terminal settings.json
 function eTerminalSettings {
-	 code $Env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
+	 nvim $Env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
 }
 
-function editWorkSpaceProfile { code $Env:HOME\PowerShell }
+function editWorkSpaceProfile { nvim $Env:HOME\PowerShell }
 Set-Alias -Name eProfileWorkSpace -Value editWorkSpaceProfile
 
 function eVSCodeSettings {
-	code $Env:APPDATA\Code\User\settings.json
+	nvim $Env:APPDATA\Code\User\settings.json
 }
 
 # Aliases
 function sourcefunc {. $Env:HOME\PowerShell\Microsoft.PowerShell_profile.ps1}
 Set-Alias -Name source -Value sourcefunc
 
-function editProfile {code $PROFILE}
+function editProfile {nvim $PROFILE}
 Set-Alias -Name eprofile -Value editProfile
 
 function pushprofilehome { Push-Location -Path $Env:HOME\PowerShell}
@@ -261,3 +272,6 @@ function RemoveLine {
 function runRemoveLine {
     RemoveLine -rootPath "C:\Users\CKoch\Documents\Source\arcos_rosterapps_new\RosterApps.Web\" -fileExtension ".aspx.cs" -lineToRemove "private UserIdentity _user = "
 }
+
+# display time and cal
+cal && Write-Host && time

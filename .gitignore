@@ -1,2 +1,6 @@
 Modules/*
 Scripts/*
+Help/*
+
+NeoVim/plugged/*
+NeoVim/undodir/*

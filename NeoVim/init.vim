@@ -1,7 +1,17 @@
-
-set runtimepath^=~\.vim runtimepath+=~\.vim\after
+" TODO auto setup symlinks
+" New-Item -ItemType SymbolicLink -Path "C:\Users\Ckoch\AppData\Local\nvim" -Target "C:\Users\Ckoch\OneDrive - ARCOS LLC\Documents\PowerShell\NeoVim"
+"
+set runtimepath^=~\PowerShell\NeoVim\ runtimepath+=~\PowerShell\NeoVim\after
 let &packpath = &runtimepath
 
+
+" recursively search directories
+" set path+=**
+" include current directory and all directories under it?
+set path+=.,**
+
+set wildmenu
+set wildignore=\*.git/\*
 set guicursor=
 set relativenumber
 set nohlsearch
@@ -15,7 +25,7 @@ set nu
 set nowrap
 set noswapfile
 set nobackup
-set undodir=~/.vim/undodir
+set undodir=~\PowerShell\NeoVim\undodir
 set undofile
 set incsearch
 set termguicolors
@@ -37,32 +47,41 @@ set shortmess+=c
 
 set colorcolumn=80
 
+" netrw
+let g:netrw_menu = 0
+
 " h nvim.txt
 "
 " c:\tools\neovim
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~\PowerShell\NeoVim\plugged')
+Plug 'junegunn/vim-easy-align'
+
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'OmniSharp/omnisharp'
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'ThePrimeagen/harpoon'
 
 Plug 'neovim/nvim-lspconfig' "-- native LSP support
 Plug 'hrsh7th/nvim-cmp' "-- autocompletion framework
 Plug 'hrsh7th/cmp-nvim-lsp' "-- LSP autocompletion provider
+Plug 'hrsh7th/nvim-compe'
 
 Plug 'gruvbox-community/gruvbox'
-Plug 'jreybert/vimagit'
 call plug#end()
 
 colorscheme gruvbox
-set background=dark
+"set background=dark
 
-highlight Normal guibg=none
+"highlight Normal guibg=none
 
 " remaps mode lhs rhs
 let mapleader = " "
@@ -72,7 +91,7 @@ nnoremap <silent> <C-P> :Files<CR>
 
 "let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8' } }
 let $FZF_DEFAULT_OPTS='--reverse'
-nnoremap <leader>gc :GCheckout<CR>
+nnoremap <leader>gs :vertical G<CR>
 
 
 "LSP stuff

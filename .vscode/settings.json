@@ -4,5 +4,7 @@
         "MD025": {
             "front_matter_title": ""
         }
-    }
+    },
+    "terminal.integrated.fontFamily": "'CascadiaCode Nerd Font', Manaco, Mento, Consolas",
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
 }
