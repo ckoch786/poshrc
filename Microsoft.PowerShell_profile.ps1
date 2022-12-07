@@ -1,5 +1,6 @@
-$my_home = "$Env:HOME\scratch"
-Push-Location -Path $my_home
+#$my_home = "$Env:HOME\scratch"
+#Push-Location -Path $my_home
+
 
 $x = [xml]"<doc><intro>Once upon a time...</intro></doc>"
 $x["doc"]
@@ -103,6 +104,8 @@ function su {
 function eTerminalSettings {
 	 nvim $Env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
 }
+
+function scratch { pushd $Env:HOME\scratch }
 
 function editWorkSpaceProfile { nvim $Env:HOME\PowerShell }
 Set-Alias -Name eProfileWorkSpace -Value editWorkSpaceProfile

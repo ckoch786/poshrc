@@ -1,4 +1,6 @@
-$SqlServerInstance = "CKOCH"
+Import-Module sqlserver
+# TODO add check for Install-Module sqlserver
+$SqlServerInstance = "localhost"
 $Database = "RosterApps_Alpha"
 
 function sql {

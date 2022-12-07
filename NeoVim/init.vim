@@ -1,14 +1,32 @@
 " TODO auto setup symlinks
 " New-Item -ItemType SymbolicLink -Path "C:\Users\Ckoch\AppData\Local\nvim" -Target "C:\Users\Ckoch\OneDrive - ARCOS LLC\Documents\PowerShell\NeoVim"
 "
-set runtimepath^=~\PowerShell\NeoVim\ runtimepath+=~\PowerShell\NeoVim\after
+lua require('ckoch786')
+set runtimepath^=~\PowerShell\NeoVim\ 
+set runtimepath+=~\PowerShell\NeoVim\after
+set runtimepath+=~\PowerShell\NeoVim\lua\ckoch786
 let &packpath = &runtimepath
-
 
 " recursively search directories
 " set path+=**
 " include current directory and all directories under it?
 set path+=.,**
+
+"" New TODO move to Set.lua
+set foldmethod=syntax
+set foldcolumn=5
+
+" new mapping to move to keymaps?
+" auto insert closing braces
+inoremap {<CR> {<CR>}<CR><Esc>2ko 
+inoremap {<Space> {}<Esc>ha
+inoremap ( ()<Esc>ha
+inoremap [ []<Esc>ha
+inoremap " ""<Esc>ha
+inoremap ' ''<Esc>ha
+inoremap ` ``<Esc>ha
+
+"" End new section
 
 set wildmenu
 set wildignore=\*.git/\*
@@ -48,7 +66,7 @@ set shortmess+=c
 set colorcolumn=80
 
 " netrw
-let g:netrw_menu = 0
+"let g:netrw_banner=0 
 
 " h nvim.txt
 "
