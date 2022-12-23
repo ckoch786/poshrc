@@ -4,14 +4,15 @@
 
 . $Env:HOME\PowerShell\sql.ps1
 
+function createSymLinks {
 <#
-	Example paths:
+	.EXAMPLE 
+    paths:
 	-pathToRosterAppsWeb C:\source\worktrees\arcos_rosterapps_new\master\RosterApps.Web
 	-pathToConfigs C:\Users\CKoch\Documents\Source\Config
 
 	TODO trim off trailing '\' if they are passed in. Or is there a better way to work with paths?
 #>
-function createSymLinks {
 	param (
 		$fullPathToRosterAppsWeb,
 		$fullPathToConfigs

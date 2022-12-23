@@ -1,19 +1,122 @@
-" TODO add source ~/.vimrc to this file and add Rider specific settings in here
-" :so ~/.ideavimrc
-set surround " Use vim-surround
 set clipboard+=unnamed " Yank to system clipboard
+"" New setting trying it out.
+set clipboard+=ideaput
+nnoremap \e :e ~\.ideavimrc<CR>
+nnoremap \r :action IdeaVim.ReloadVimRc.reload<CR>
+
+let mapleader=" "  
+
+""" source control
+nnoremap <leader>n :action VcsShowNextChangeMarker<CR>
+nnoremap <leader>p :action VcsShowPrevChangeMarker<CR>
+
+
+
+""" Distraction Free Mode
+"nnoremap <c-z> :action ToggleDistractionFreeMode<CR>
+
+""" Terminal
+"nnoremap <c-t> :action ActivateTerminalToolWindow<CR>
+"nnoremap <leader>t :action Terminal.OpenInTerminal<CR>
+
+""" Navigation
+"nnoremap <c-\> :action SplitVertically<CR>
+"nnoremap <c--> :action SplitHorizontally<CR>
+"nnoremap <c-=> :action Unsplit<CR>
+"nnoremap <c-m> :action MoveEditorToOppositeTabGroup<CR>
+
+sethandler <c-h> a:vim
+sethandler <c-l> a:vim
+sethandler <c-j> a:vim
+sethandler <c-k> a:vim
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+
+"nnoremap <TAB> :action PreviousTab<CR>
+"nnoremap <s-TAB> :action NextTab<CR>
+"nnoremap <Leader>en :action EditSourceInNewWindow<CR>
+"nnoremap <Leader>n :action NextWindow<CR>
+"nnoremap <Leader>q :action CloseContent<CR>
+"nnoremap <Leader>qa :action CloseAllEditors<CR>
+
+
+""" Editing Source Code
+set ideajoin
+set idearefactormode=keep
+"vnoremap < <gv
+"vnoremap > >gv
+"nnoremap [[ :action MethodUp<CR>
+"nnoremap ]] :action MethodDown<CR>
+"nnoremap zc :action CollapseRegion<CR>
+"nnoremap zo :action ExpandRegion<CR>
+"nnoremap <Leader>zc :action CollapseAllRegions<CR>
+"nnoremap <Leader>zo :action ExpandAllRegions<CR>
+"nnoremap <Leader>c :action CommentByLineComment<CR>
+"nnoremap <Leader>r :action Refactorings.QuickListPopupAction
+"nnoremap <Leader>= :action ReformatCode<CR> "" leader =
+"nnoremap <Leader>o :action OptimizeImports<CR>
+"nnoremap <c-r> :action RecentFiles<CR>
+"nnoremap <Leader>l :action RecentLocations<CR>
+"nnoremap <Leader>h :action LocalHistory.ShowHistory<CR>
+"nnoremap ge :action GoToNextError<CR>
+"nnoremap gE :action GotToPreviousError<CR>
+"nnoremap <Leader>s :write<CR>
+
+""" Search and Source Code Navigation
+set incsearch
+"nnoremap <c-/> :action FindInPath<CR>
+"nnoremap <c-a> :action GotToAction<CR>
+"nnoremap <c-f> :action GotToFile<CR>
+"nnoremap <leader>u :action FindUsages<CR>
+"nnoremap <leader>s :action GotoRelated<CR>
+"nnoremap <leader>h :action CallHierarchy<CR>
+"nnoremap <leader>b :action ShowNavBar<CR>
+"nnoremap <c-s> :action FileStructurePopup<CR>
+"nnoremap <c-o> :action GotoSymbol<CR>
+"nnoremap gc :action GotoClass<CR>
+nnoremap gi :action GotoImplementation<CR>
+nnoremap gd :action GotoDeclaration<CR>
+"nnoremap gp :action GotToSuperMethod<CR>
+nnoremap gt :action GoToTest<CR>
+nnoremap gb :action Back<CR>
+nnoremap gf :action Forward<CR>
+
+""" Tool Windows
+"nnoremap <c-p> :action JumpToLastWindow<CR>
+"nnoremap <c-x> :action HideAllWindows<CR>
+
+""" Running and Debugging
+"nnoremap ,r :action ContextRun<CR>
+"nnoremap ,c :action RunClass<CR>
+"nnoremap ,f :action ChooseRunConfiguration<CR>
+"nnoremap ,t :action ActivateRunToolWindow<CR>
+"nnoremap ,u :action Rerun<CR>
+"nnoremap ,f :action RerunFailedTests<CR>
+"nnoremap ,b :action ToggleLineBreakpoint<CR>
+"nnoremap ,d :action ContextDebug<CR>
+"nnoremap ,n :action ActivateDebugToolWindow<CR>
+
+
+""" Old settings ----
+set surround " Use vim-surround
+set commentary
+set nerdtree
+
 set scrolloff=8 " Keep 8 minimum lines of code above and below cursor when scrolling
-set ch=2                " Make command line two lines high
-set mousehide           " Hide the mouse when typing text
+"set ch=2                " Make command line two lines high
+"set mousehide           " Hide the mouse when typing text
 " ---- Line number settings ----
 set relativenumber
 set number " Show line numbers on left
 " ----- Search settings ------
 set ignorecase
 set smartcase
-set incsearch
-set hlsearch
+"set hlsearch
 Plug 'easymotion/vim-easymotion'
 set easymotion
-set acejump
-let mapleader=" "
+"set acejump
+set noerrorbells
+set visualbell
+	

@@ -52,7 +52,9 @@ if ($env:UserDomain -eq "ARCOSHQ") {
 }
 
 . $Env:HOME\PowerShell\git.ps1
+. $Env:HOME\PowerShell\ColorizeCode.ps1
 . $Env:HOME\PowerShell\ShowCalendar\showcalendar.ps1
+
 
 
 
@@ -69,6 +71,14 @@ function cal {
   } else {
     Show-Calendar
   }
+}
+
+function fcat {
+    param(
+        [String]$InitialSearchString
+    )
+
+    Get-Content $(fzf --query="$InitialSearchString") | ColorizeCode
 }
 
 function cl($path) { cd $path; ls; }
@@ -278,3 +288,4 @@ function runRemoveLine {
 
 # display time and cal
 cal && Write-Host && time
+Set-PSReadLineKeyHandler -Chord "Ctrl+f" -Function ForwardWord
