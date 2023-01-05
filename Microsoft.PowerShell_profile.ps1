@@ -131,6 +131,8 @@ Set-Alias -Name source -Value sourcefunc
 function editProfile {nvim $PROFILE}
 Set-Alias -Name eprofile -Value editProfile
 
+function cdProfile { cd (Get-Item $Profile).DirectoryName }
+
 function pushprofilehome { Push-Location -Path $Env:HOME\PowerShell}
 Set-Alias -Name profilehome -Value pushprofilehome
 
